@@ -1,0 +1,3 @@
+import { Router } from "express"; import { list, create, update, remove } from "../controllers/categoryController.js";
+import { requireAuth } from "../middleware/auth.js"; import { requireTenant, resolvePublicTenant } from "../middleware/tenant.js"; import { mediaUpload } from "../middleware/upload.js"; import { requirePermission } from "../middleware/permissions.js";
+const r=Router();r.get("/",resolvePublicTenant,list);r.post("/",requireAuth,requireTenant,requirePermission("categories.create"),mediaUpload.single("image"),create);r.put("/:id",requireAuth,requireTenant,requirePermission("categories.edit"),mediaUpload.single("image"),update);r.delete("/:id",requireAuth,requireTenant,requirePermission("categories.edit"),remove);export default r;

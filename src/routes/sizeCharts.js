@@ -1,0 +1,13 @@
+import { Router } from "express";
+import { list, get, create, update, remove } from "../controllers/sizeChartController.js";
+import { requireAuth } from "../middleware/auth.js";
+import { requireTenant, resolvePublicTenant } from "../middleware/tenant.js";
+import { requirePermission } from "../middleware/permissions.js"; import { requireFeature } from "../middleware/planLimits.js";
+const r=Router();
+r.get("/",requireAuth,requireTenant,requireFeature("sizes"),requirePermission("settings.view"),list);
+r.get("/public/:id",resolvePublicTenant,get);
+r.get("/:id",requireAuth,requireTenant,requireFeature("sizes"),requirePermission("settings.view"),get);
+r.post("/",requireAuth,requireTenant,requireFeature("sizes"),requirePermission("settings.edit"),create);
+r.put("/:id",requireAuth,requireTenant,requireFeature("sizes"),requirePermission("settings.edit"),update);
+r.delete("/:id",requireAuth,requireTenant,requireFeature("sizes"),requirePermission("settings.edit"),remove);
+export default r;

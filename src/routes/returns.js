@@ -1,0 +1,3 @@
+import { Router } from "express"; import { create, list } from "../controllers/returnController.js";
+import { requireAuth } from "../middleware/auth.js"; import { requireTenant } from "../middleware/tenant.js"; import { requirePermission } from "../middleware/permissions.js"; import { requireFeature } from "../middleware/planLimits.js";
+const r=Router();r.get("/",requireAuth,requireTenant,requireFeature("inventory"),requirePermission("returns.view"),list);r.post("/",requireAuth,requireTenant,requireFeature("inventory"),requirePermission("returns.create"),create);export default r;

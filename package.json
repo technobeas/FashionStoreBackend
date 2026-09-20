@@ -1,0 +1,36 @@
+{
+  "name": "toy-shop-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "seed": "node src/seed.js",
+    "migrate:tenant": "node src/migrateTenant.js",
+    "create:super-admin": "node src/createSuperAdmin.js",
+    "seed:platform": "node src/seedPlatformAdmin.js",
+    "security:audit": "node scripts/securityAuditStatic.js",
+    "performance:indexes": "node scripts/performanceIndexes.js",
+    "backup:mongodb": "node scripts/backupMongo.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.5.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.18.0",
+    "morgan": "^1.10.0",
+    "multer": "^2.0.2",
+    "web-push": "^3.6.7",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

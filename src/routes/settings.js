@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { get, update } from "../controllers/settingsController.js";
+import { requireAuth } from "../middleware/auth.js";
+import { requireTenant, resolvePublicTenant } from "../middleware/tenant.js";
+import { mediaUpload } from "../middleware/upload.js";
+import { requirePermission } from "../middleware/permissions.js";
+const r = Router();
+r.get("/", resolvePublicTenant, get);
+r.put("/", requireAuth, requireTenant, requirePermission("settings.edit"), mediaUpload.fields([{ name: "logoImage", maxCount: 1 }, { name: "faviconImage", maxCount: 1 }, { name: "heroImage", maxCount: 1 }, { name: "bannerImages", maxCount: 10 }]), update);
+export default r;

@@ -1,0 +1,3 @@
+import {Router} from "express"; import {adjust,history,lowStock,ledger} from "../controllers/stockController.js";
+import {requireAuth} from "../middleware/auth.js"; import {requireTenant} from "../middleware/tenant.js"; import {requirePermission} from "../middleware/permissions.js"; import { requireFeature } from "../middleware/planLimits.js";
+const r=Router();r.use(requireAuth,requireTenant,requireFeature("inventory"));r.get("/low",requirePermission("inventory.view"),lowStock);r.get("/history",requirePermission("inventory.view"),history);r.get("/ledger",requirePermission("inventory.view"),ledger);r.post("/adjust",requirePermission("inventory.adjust"),adjust);export default r;

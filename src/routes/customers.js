@@ -1,0 +1,15 @@
+import { Router } from "express";
+import { list, search, get, create, update, remove, crmOverview } from "../controllers/customerController.js";
+import { requireAuth } from "../middleware/auth.js";
+import { requireTenant } from "../middleware/tenant.js";
+import { requirePermission } from "../middleware/permissions.js";
+import { requirePlanCapacity, requireFeature } from "../middleware/planLimits.js";
+const r=Router(); r.use(requireAuth,requireTenant,requireFeature("customers"));
+r.get("/",requirePermission("customers.view"),list);
+r.get("/crm/overview",requirePermission("customers.view"),crmOverview);
+r.get("/search",requirePermission("customers.view"),search);
+r.get("/:id",requirePermission("customers.view"),get);
+r.post("/",requirePermission("customers.create"),requirePlanCapacity("customers"),create);
+r.put("/:id",requirePermission("customers.edit"),update);
+r.delete("/:id",requirePermission("customers.edit"),remove);
+export default r;

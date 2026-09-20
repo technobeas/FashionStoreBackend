@@ -1,0 +1,11 @@
+import { Router } from "express";
+import { create, listAdmin, convertToOnlineOrder } from "../controllers/bookingController.js";
+import { resolvePublicTenant, requireTenant } from "../middleware/tenant.js";
+import { requireAuth } from "../middleware/auth.js";
+import { requirePermission } from "../middleware/permissions.js";
+import { requireFeature } from "../middleware/planLimits.js";
+const r=Router();
+r.post("/",resolvePublicTenant,requireFeature("catalog"),create);
+r.get("/admin/list",requireAuth,requireTenant,requireFeature("online_orders"),requirePermission("sales.view"),listAdmin);
+r.post("/admin/:id/convert",requireAuth,requireTenant,requireFeature("online_orders"),requirePermission("sales.create"),convertToOnlineOrder);
+export default r;
